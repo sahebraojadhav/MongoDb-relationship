@@ -12,6 +12,47 @@ const connection=mongoose.connect('mongodb+srv://onlysahebpatil:ykCebfI0oaou7d5S
 })
 
 
+/************************ Many to many  *********************/
+
+const ownerSchema=new mongoose.Schema({
+    name:String
+})
+
+const Owner=mongoose.model("Owner",ownerSchema);
+
+const locationAndPriceSchema=new mongoose.Schema({
+    location:String,
+    price:String
+})
+
+const LocationAndPrice=mongoose.model("LocationAndPrice",locationAndPriceSchema);
+
+const houseSchema=new mongoose.Schema({
+    street:String,
+    city:String,
+    state:String,
+    Zip:String,
+    LocationAndPrice:{type:mongoose.Types.ObjectId,ref:LocationAndPrice}
+})
+
+const House=mongoose.model("House",houseSchema);
+
+
+const houseOwnerSchema={
+    owner:{type:mongoose.Types.ObjectId,ref:"Owner"},
+    house:{type:mongoose.Types.ObjectId,ref:"House"}
+}
+
+const HouseOwner=new mongoose.model("HouseOwner",houseOwnerSchema);
+
+module.exports={
+    LocationAndPrice,
+    HouseOwner,
+    House,
+    Owner
+}
+
+
 /************* M:N Relationship *********/
 
 /*1:M relationship*/
